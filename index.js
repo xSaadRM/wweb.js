@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
+const qrcode = require('qrcode-terminal');
 
 // Path where the session data will be stored
 const SESSION_FILE_PATH = './session.json';
@@ -27,9 +28,10 @@ client.on('authenticated', (session) => {
     });
 });
 
-// Listen for the QR code and authenticate
+// Listen for the QR code and display it in the terminal
 client.on('qr', (qr) => {
-    console.log('Scan this QR code with your phone:', qr);
+    qrcode.generate(qr, { small: true });
+    console.log('Scan the QR code above with your phone.');
 });
 
 // Listen for the client to be ready
