@@ -1,17 +1,10 @@
 const fs = require('fs');
-const { Client } = require('whatsapp-web.js');
+const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 
-const SESSION_FILE_PATH = './session.json';
-let sessionData;
-
-// Load the session data if it has been previously saved
-if (fs.existsSync(SESSION_FILE_PATH)) {
-    sessionData = require(SESSION_FILE_PATH);
-}
-
 const client = new Client({ 
-    session: sessionData 
+
+    authStrategy: new LocalAuth()
 });
 
 client.on('qr', qr => {
