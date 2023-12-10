@@ -1,6 +1,6 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
 const fs = require('fs');
-const qr = require('qrcode');
 
 // Path where the session data will be stored
 const SESSION_FILE_PATH = './session.json';
@@ -28,20 +28,24 @@ client.on('authenticated', (session) => {
     });
 });
 
-// Listen for the QR code and save it as an image file
-client.on('qr', async (qrContent) => {
-    try {
-        const qrImage = await qr.toFile('./qrCode.png', qrContent);
-        console.log('QR code generated. Check qrCode.png file.');
-        console.log('Scan the generated QR code with your phone.');
-    } catch (error) {
-        console.error('Error generating QR code:', error);
-    }
+// Display QR code in the terminal for authentication
+client.on('qr', (qr) => {
+    qrcode.generate(qr, { small: true });
+    console.log('Scan the QR code above with your phone.');
 });
 
 // Listen for the client to be ready
 client.on('ready', () => {
     console.log('Client is ready!');
+});
+
+// Listen for incoming messages
+client.on('message', (message) => {
+    console.log(`Received message: ${message.body}`);
+    
+    if (message.body === '!ping') {
+        message.reply('pong');
+    }
 });
 
 // Initialize the client
