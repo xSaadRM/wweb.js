@@ -12,15 +12,6 @@ client.on('qr', qr => {
     console.log('Please scan the QR code with your phone.');
 });
 
-client.on('authenticated', (session) => {
-    sessionData = session;
-    fs.writeFile(SESSION_FILE_PATH, JSON.stringify(session), (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Session data is saved successfully!');
-        }
-    });
-});
+
 
 client.initialize();
