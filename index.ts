@@ -220,8 +220,10 @@ const startSock = async() => {
                         if (messageText === 'alive') {
                             // Responding to 'alive' command with a specific reply
                             const replyMessage = {
-                                text: '🟢 xMutiny is ONLINE!!!',
-                                quoted: msg.message // Using the 'quoted' property to reference the original message
+				    { text: '🟢 xMutiny is ONLINE!!!' },
+				{ quoted: msg.message }
+			}
+			      // Using the 'quoted' property to reference the original message
                             };
 
                             await sendMessageWTyping(replyMessage, msg.key.remoteJid!);
